@@ -1236,3 +1236,29 @@ void test_status_ignore__skips_bom(void)
 	refute_is_ignored("foo.txt");
 	refute_is_ignored("bar.txt");
 }
+
+void test_status_ignore__leading_spaces_are_significant(void)
+{
+	static const char *test_files[] = {
+		"empty_standard_repo/a.test",
+		"empty_standard_repo/b.test",
+		"empty_standard_repo/c.test",
+		"empty_standard_repo/d.test",
+		NULL
+	};
+
+	make_test_data("empty_standard_repo", test_files);
+	cl_git_mkfile(
+		"empty_standard_repo/.gitignore",
+		" a.test\n"
+		"b.test\n"
+		"\tc.test\n"
+		"d.test\n");
+
+	refute_is_ignored("a.test");
+	assert_is_ignored(" a.test");
+	assert_is_ignored("b.test");
+	refute_is_ignored("c.test");
+	assert_is_ignored("\tc.test");
+	assert_is_ignored("d.test");
+}
