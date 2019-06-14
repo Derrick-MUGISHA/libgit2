@@ -9,6 +9,16 @@
 #include "hash.h"
 #include "hash/hash_mbedtls.h"
 
+int git_hash_global_init(void)
+{
+	return 0;
+}
+
+int git_hash_ctx_init(git_hash_ctx *ctx)
+{
+	return git_hash_init(ctx);
+}
+
 void git_hash_ctx_cleanup(git_hash_ctx *ctx)
 {
     assert(ctx);
