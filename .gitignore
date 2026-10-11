@@ -7,3 +7,5 @@ CMakeSettings.json
 .vs
 .idea
 .gitignore
+config.bat
+node_modules
